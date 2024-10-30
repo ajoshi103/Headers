@@ -1,5 +1,6 @@
-from flask import Flask, render_template_string, request
+from flask import Flask, render_template_string
 import requests
+import os
 
 app = Flask(__name__)
 
@@ -7,7 +8,9 @@ app = Flask(__name__)
 def index():
     # The API endpoint and data to post
     url = "https://chimpu.online/api/post.php"
-    payload = {'phonenumber': '1234567890'}  # Replace with actual phone number
+    # Get the phone number from environment variables
+    phone_number = os.getenv('PHONE_NUMBER', '1234567890')  # Default for testing
+    payload = {'phonenumber': phone_number}  # Use the phone number from environment variable
 
     # Send POST request and get headers
     response = requests.post(url, data=payload)
